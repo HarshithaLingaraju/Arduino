@@ -1,0 +1,30 @@
+bool ledState = false;  // LED OFF initially
+
+void setup() {
+  pinMode(LED_BUILTIN, OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Type 1 to turn LED ON, 0 to turn LED OFF");
+}
+
+void loop() {
+  if (Serial.available() > 0) {       // Check if data is available
+    char input = Serial.read();       // Read a single character
+
+    if (input == '\n' || input == '\r') {
+      return;
+    }
+    if (input == '1') {
+      ledState = true;
+      digitalWrite(LED_BUILTIN, HIGH);
+      Serial.println("LED turned ON");
+    }
+    else if (input == '0') {
+      ledState = false;
+      digitalWrite(LED_BUILTIN, LOW);
+      Serial.println("LED turned OFF");
+    }
+    else {
+      Serial.println("Invalid input. Type 1 or 0");
+    }
+  }
+}
